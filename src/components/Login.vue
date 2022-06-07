@@ -54,7 +54,7 @@ export default {
   methods: {
     onSubmit(evt) {
       evt.preventDefault()
-      axios.post(`http://localhost:3000/api/auth/login/`, this.login)
+      axios.post(`http://kittenbook.software:3000/api/auth/login/`, this.login)
         .then(response => {
           localStorage.setItem('jwtToken', response.data.token)
           localStorage.setItem('authenticated', true)

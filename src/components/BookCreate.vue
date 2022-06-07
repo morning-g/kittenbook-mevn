@@ -146,7 +146,7 @@ export default {
             this.book.count = Number(this.book.count)
             this.book.stars = Number(this.rating)
             axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken')
-            axios.post(`http://localhost:3000/book/`, this.book)
+            axios.post(`http://kittenbook.software:3000/book/`, this.book)
                 .then(response => {
                     this.dialogCrear = true
                 })

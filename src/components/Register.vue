@@ -54,7 +54,7 @@ export default {
   methods: {
     onSubmit(evt) {
       evt.preventDefault()
-      axios.post(`http://localhost:3000/api/auth/register/`, this.register)
+      axios.post(`http://kittenbook.software:3000/api/auth/register/`, this.register)
         .then(response => {
           alert("Registro exitoso. Por favor ingrese a su cuenta.")
           this.$router.push({

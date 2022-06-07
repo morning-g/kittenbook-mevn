@@ -242,7 +242,7 @@ export default {
   methods: {
     getAll() {
       axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken')
-      axios.get(`http://localhost:3000/book`)
+      axios.get(`http://kittenbook.software:3000/book`)
         .then(response => {
           this.books = response.data
         })
@@ -263,7 +263,7 @@ export default {
     },
     venta() {
       axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken')
-      axios.put(`http://localhost:3000/book/${this.id_libro}`, { count: this.cnt_libro - Number(this.diff_libro) })
+      axios.put(`http://kittenbook.software:3000/book/${this.id_libro}`, { count: this.cnt_libro - Number(this.diff_libro) })
         .then(response => {
           this.dialogActualizar = true
           this.cnt_libro = this.cnt_libro - Number(this.diff_libro)
@@ -275,7 +275,7 @@ export default {
     },
     eliminar() {
       axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken')
-      axios.delete(`http://localhost:3000/book/${this.id_libro}`)
+      axios.delete(`http://kittenbook.software:3000/book/${this.id_libro}`)
         .then(response => {
           this.dialogEliminar = true
           this.getAll()
