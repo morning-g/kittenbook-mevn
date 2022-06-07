@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 const passport = require('passport');
 const cors = require("cors");
 
+var app = express();
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', 'http://kittenbook.software');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
@@ -25,7 +26,6 @@ app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 
 var book = require('./routes/book');
-var app = express();
 var auth = require('./routes/auth');
 
 
