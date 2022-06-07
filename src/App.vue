@@ -70,9 +70,6 @@
         <v-row justify="center" class="my-4 text-center">
           <v-col cols="12">La compasión es la base de la moralidad.</v-col>
           <v-col cols="12">
-            <v-btn href="https://www.github.com/morning-g/kittenbook-mevn/" target="_blank" text dark>
-              <v-icon>mdi-github</v-icon>
-            </v-btn>
             <v-btn href="https://www.jcarlos19.com/" target="_blank" text dark>
               <v-icon>mdi-link</v-icon>
             </v-btn>
