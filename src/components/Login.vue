@@ -17,7 +17,8 @@
             </v-text-field>
             <v-text-field rounded dark v-model.trim="login.password" label="Contraseña" type="password" required
               :error-messages="errors.password" :rules="passwordRules"></v-text-field>
-            <v-btn color="deep-purple" rounded dark type="submit" variant="primary" :disabled="!isFormValid">Ingresar</v-btn>
+            <v-btn color="deep-purple" rounded dark type="submit" variant="primary" :disabled="!isFormValid">Ingresar
+            </v-btn>
             <v-btn color="deep-purple" rounded dark type="button" variant="success" @click.stop="register()">Registrarse
             </v-btn>
           </v-form>
@@ -35,6 +36,9 @@
 
 import axios from 'axios'
 axios.defaults.withCredentials = true;
+const headers = {
+  "Content-Type": "application/json",
+};
 
 export default {
   name: 'Login',
@@ -55,7 +59,7 @@ export default {
   methods: {
     onSubmit(evt) {
       evt.preventDefault()
-      axios.post(`http://kittenbook.software:3000/api/auth/login/`, this.login)
+      axios.post(`http://kittenbook.software:3000/api/auth/login/`, this.login, { headers })
         .then(response => {
           localStorage.setItem('jwtToken', response.data.token)
           localStorage.setItem('authenticated', true)

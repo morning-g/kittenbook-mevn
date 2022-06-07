@@ -16,7 +16,8 @@
               :error-messages="errors.email" v-model.trim="register.username" :rules="usernameRules"></v-text-field>
             <v-text-field rounded dark id="password" label="Contraseña" type="password" required
               :error-messages="errors.password" v-model.trim="register.password" :rules="passwordRules"></v-text-field>
-            <v-btn rounded dark color="deep-purple" type="submit" variant="primary" :disabled="!isFormValid">Registrarse</v-btn>
+            <v-btn rounded dark color="deep-purple" type="submit" variant="primary" :disabled="!isFormValid">Registrarse
+            </v-btn>
             <v-btn rounded dark color="deep-purple" type="button" variant="success" @click="$router.go(-1)">Cancelar
             </v-btn>
           </v-form>
@@ -34,6 +35,9 @@
 
 import axios from 'axios'
 axios.defaults.withCredentials = true;
+const headers = {
+  "Content-Type": "application/json",
+};
 
 export default {
   name: 'Register',
@@ -55,7 +59,7 @@ export default {
   methods: {
     onSubmit(evt) {
       evt.preventDefault()
-      axios.post(`http://kittenbook.software:3000/api/auth/register/`, this.register)
+      axios.post(`http://kittenbook.software:3000/api/auth/register/`, this.register, { headers })
         .then(response => {
           alert("Registro exitoso. Por favor ingrese a su cuenta.")
           this.$router.push({

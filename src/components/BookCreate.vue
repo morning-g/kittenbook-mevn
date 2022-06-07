@@ -106,6 +106,9 @@
 <script>
 import axios from 'axios'
 axios.defaults.withCredentials = true;
+const headers = {
+    "Content-Type": "application/json",
+};
 
 export default {
     name: 'BookCreate',
@@ -147,7 +150,7 @@ export default {
             this.book.count = Number(this.book.count)
             this.book.stars = Number(this.rating)
             axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwtToken')
-            axios.post(`http://kittenbook.software:3000/book/`, this.book)
+            axios.post(`http://kittenbook.software:3000/book/`, this.book, { headers })
                 .then(response => {
                     this.dialogCrear = true
                 })
