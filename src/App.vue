@@ -5,7 +5,6 @@
         <v-app-bar-nav-icon @click="drawer = !drawer"> </v-app-bar-nav-icon>
         <v-toolbar-title>Kittenbook</v-toolbar-title>
       </v-app-bar>
-      <!-- :src="require('./assets/backg.jpg')" -->
       <v-navigation-drawer app v-model="drawer" dark :src="require('./assets/backg.jpg')" temporary>
         <v-list-item>
           <v-list-item-content>
@@ -43,7 +42,7 @@
         </v-list>
         <template v-slot:append>
           <div class="pa-2">
-            <v-btn rounded block @click="logout()">
+            <v-btn rounded block @click="logout()" @logged-user="loggedIn" :v-if="loggedUsername!==''">
               Cerrar sesión
             </v-btn>
           </div>
@@ -78,13 +77,18 @@
 export default {
   data: () => ({
     drawer: false,
+    loggedUsername: '',
   }),
   methods: {
     logout() {
       localStorage.removeItem('jwtToken')
+      this.loggedUsername = ''
       this.$router.push({
         name: 'Login'
       })
+    },
+    loggedIn(username) {
+      this.loggedUsername = username
     }
   },
   name: 'App'

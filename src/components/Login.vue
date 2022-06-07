@@ -8,19 +8,23 @@
           <div v-if="errors && errors.length">
             <div v-for="error of errors">
               <v-alert v-model="alert" border="left" close-text="Close Alert" color="deep-purple accent-4" dark
-                dismissible show>{{ error.message }}</v-alert>
+                dismissible show>{{ error.message }}.</v-alert>
             </div>
           </div>
-          <v-form @submit="onSubmit">
-            <v-text-field rounded dark id="username" v-model="username" v-model.trim="login.username"
-              label="Nombre de usuario" type="username" required autofocus :error-messages="errors.email">
+          <v-form @submit="onSubmit" v-model="isFormValid">
+            <v-text-field rounded dark v-model.trim="login.username" label="Nombre de usuario" type="username" required
+              autofocus :error-messages="errors.email" :rules="usernameRules">
             </v-text-field>
-            <v-text-field rounded dark id="password" v-model="password" v-model.trim="login.password" label="Contraseña"
-              type="password" required :error-messages="errors.password"></v-text-field>
-            <v-btn color="deep-purple" rounded dark type="submit" variant="primary">Ingresar</v-btn>
+            <v-text-field rounded dark v-model.trim="login.password" label="Contraseña" type="password" required
+              :error-messages="errors.password" :rules="passwordRules"></v-text-field>
+            <v-btn color="deep-purple" rounded dark type="submit" variant="primary" :disabled="!isFormValid">Ingresar</v-btn>
             <v-btn color="deep-purple" rounded dark type="button" variant="success" @click.stop="register()">Registrarse
             </v-btn>
           </v-form>
+          <br />
+          <br />
+          <br />
+          <br />
         </v-col>
       </v-row>
     </v-container>
@@ -36,7 +40,15 @@ export default {
   data() {
     return {
       login: {},
-      errors: []
+      errors: [],
+      isFormValid: false,
+      usernameRules: [
+        v => !!v || 'Este campo es obligatorio.',
+        v => (v && v.length <= 15) || 'El nombre de usuario debe tener menos de 15 caracteres.'
+      ],
+      passwordRules: [
+        v => !!v || 'Este campo es obligatorio.',
+      ],
     }
   },
   methods: {
@@ -45,7 +57,7 @@ export default {
       axios.post(`http://localhost:3000/api/auth/login/`, this.login)
         .then(response => {
           localStorage.setItem('jwtToken', response.data.token)
-          // logged(login.username)
+          this.$emit('loggedUser', login.username)
           this.$router.push({
             name: 'BookList'
           })
@@ -60,9 +72,6 @@ export default {
         name: 'Register'
       })
     },
-    // logged(username) {
-    //   this.$emit('logged', username)
-    // }
   }
 }
 </script>

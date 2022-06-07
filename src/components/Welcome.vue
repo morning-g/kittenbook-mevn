@@ -3,12 +3,12 @@
         <v-container>
             <h2>¡Bienvenid@!</h2>
             <br />
-            <v-carousel delimiter-icon="mdi-minus">
-                <v-carousel-item v-for="color in colors" :key="color">
+            <v-carousel delimiter-icon="mdi-minus" show-arrows-on-hover hide-delimiter-background cycle interval="1000">
+                <v-carousel-item v-for="(color, i) in colors" :key="color">
                     <v-sheet :color="color" height="100%" tile>
                         <v-row class="fill-height" align="center" justify="center">
                             <div class="text-h2">
-                                {{ color }}
+                                {{ words[i] }}
                             </div>
                         </v-row>
                     </v-sheet>
@@ -23,8 +23,12 @@
 <script>
 export default {
     name: 'App',
-    data: () => ({
-        colors: ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', '#7f00ff'],
-    }),
+    data() {
+        return {
+            carousel: 0,
+            words: 'La compasión es la base de la moralidad.'.split(' '),
+            colors: ['white', 'red', 'yellow', 'green', 'orange', 'indigo', 'cyan', 'purple'],
+        }
+    },
 };
 </script>

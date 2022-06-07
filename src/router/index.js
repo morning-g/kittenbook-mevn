@@ -11,7 +11,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/',
+      path: '/listarlibros',
       name: 'BookList',
       component: BookList
     },
@@ -21,17 +21,17 @@ export default new Router({
       component: Login
     },
     {
-      path: '/register',
+      path: '/registro',
       name: 'Register',
       component: Register
     },
     {
-      path: '/welcome',
+      path: '/inicio',
       name: 'Welcome',
       component: Welcome
     },
     {
-      path: '/bookcreate',
+      path: '/crearlibro',
       name: 'BookCreate',
       component: BookCreate
     }

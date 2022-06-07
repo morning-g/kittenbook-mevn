@@ -27,7 +27,7 @@
               <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar" single-line hide-details>
               </v-text-field>
             </v-card-title>
-            <v-data-table dark striped hover :search="search" :items="books" :headers="headers" :items-per-page="20"
+            <v-data-table dark striped hover :search="search" :items="books" :headers="headers" :items-per-page="10"
               class="elevation-1">
               <template slot="actions" scope="row">
                 <v-btn size="sm" @click.stop="details(row.item)">Details</v-btn>
@@ -40,53 +40,55 @@
 
 
 
-          <!-- <v-row no-gutters>
-            <v-col cols="12" sm="3" md="6"> -->
-          <v-container fluid v-for="(book, index) in books.slice(page == 1 ? 0 : page * page + page, page * 6)"
-            :key="book._id">
-            <v-card dark ripple max-width="344" elevation="5" class="card-container">
-              <v-img :src="book.image_url" height="200px"></v-img>
+          <v-row no-gutters>
+            <v-col cols="8" sm="1" md="4" v-for="book in books.slice(page == 1 ? 0 : page * page + page, page * 6)"
+              :key="book._id">
+              <v-container>
+                <!-- cols="8" sm="1" md="4" -->
+                <v-card dark ripple max-width="344" elevation="5" class="card-container">
+                  <v-img :src="book.image_url" height="200px"></v-img>
 
-              <v-card-title>
-                {{ book.title }}
-              </v-card-title>
+                  <v-card-title>
+                    {{ book.title }}
+                  </v-card-title>
 
-              <v-card-subtitle align="left">
-                {{ book.author }}
-              </v-card-subtitle>
+                  <v-card-subtitle align="left">
+                    {{ book.author }}
+                  </v-card-subtitle>
 
-              <v-card-subtitle align="center">
-                <h2>{{ book.count }}</h2>
-              </v-card-subtitle>
+                  <v-card-subtitle align="center">
+                    <h2>{{ book.count }}</h2>
+                  </v-card-subtitle>
 
-              <v-rating color="deep-purple" readonly dark :value="book.stars"></v-rating>
+                  <v-rating color="deep-purple" readonly dark :value="book.stars"></v-rating>
 
-              <v-card-actions>
-                <v-btn rounded color="deep-purple lighten-2" width="85%" @click="dialogoVenta(book._id, book.count)">
-                  Venta
-                </v-btn>
+                  <v-card-actions>
+                    <v-btn rounded color="deep-purple lighten-2" width="85%"
+                      @click="dialogoVenta(book._id, book.count)">
+                      Venta
+                    </v-btn>
 
-                <v-spacer></v-spacer>
+                    <v-spacer></v-spacer>
 
-                <v-btn icon @click="shows[index] = !shows[index]">
-                  <v-icon>{{ shows[index] ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-                </v-btn>
-              </v-card-actions>
+                    <v-btn icon @click="show = !show">
+                      <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+                    </v-btn>
+                  </v-card-actions>
 
-              <v-expand-transition>
-                <div :v-show="shows[index]">
-                  <v-divider></v-divider>
+                  <v-expand-transition>
+                    <div v-show="show">
+                      <v-divider></v-divider>
 
-                  <v-card-text>
-                    {{ book.description }}
-                  </v-card-text>
-                </div>
-              </v-expand-transition>
-              <br />
-            </v-card>
-          </v-container>
-          <!-- </v-col>
-          </v-row> -->
+                      <v-card-text>
+                        {{ book.description }}
+                      </v-card-text>
+                    </div>
+                  </v-expand-transition>
+                  <br />
+                </v-card>
+              </v-container>
+            </v-col>
+          </v-row>
 
 
 
@@ -178,11 +180,12 @@
         </v-container>
       </v-dialog>
 
-      <ul v-if="errors && errors.length">
-        <li v-for="error of errors">
-          <b-alert show>{{ error.message }}</b-alert>
-        </li>
-      </ul>
+      <div v-if="errors && errors.length">
+        <div v-for="error of errors">
+          <v-alert v-model="alert" border="left" close-text="Close Alert" color="deep-purple accent-4" dark dismissible
+            show>{{ error.message }}.</v-alert>
+        </div>
+      </div>
     </v-container>
   </v-content>
 </template>
@@ -219,12 +222,16 @@ export default {
         { text: 'Rating', value: 'stars' },
       ],
       books: [],
-      shows: Array(100).fill(false),
+      show: false,
       errors: []
     }
   },
   created() {
     this.getAll()
+    this.books.forEach(element => {
+      shows[element._id] = false
+    });
+    console.log(this.shows)
   },
   methods: {
     getAll() {
