@@ -6,9 +6,28 @@ var bodyParser = require('body-parser');
 const passport = require('passport');
 const cors = require("cors");
 
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', 'http://kittenbook.software');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Private-Network', 'true');
+  next();
+});
+const corsOptions = {
+  origin: 'http://kittenbook.software',
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization"],
+  optionSuccessStatus: 200
+};
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
+
 var book = require('./routes/book');
 var app = express();
 var auth = require('./routes/auth');
+
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -27,22 +46,6 @@ app.use('/books', express.static(path.join(__dirname, 'dist')));
 app.use('/book', book);
 app.use('/api/auth', auth);
 
-app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', 'http://kittenbook.software');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Private-Network', 'true');
-  next();
-});
-const corsOptions = {
-  origin: 'http://kittenbook.software',
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization"],
-  optionSuccessStatus: 200
-};
-app.use(cors(corsOptions));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
