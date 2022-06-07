@@ -28,11 +28,11 @@ app.use('/book', book);
 app.use('/api/auth', auth);
 
 app.use(function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "http://kittenbook.software");
-  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept", "Authorization");
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
-  res.setHeader('Access-Control-Allow-Credentials', "true");
-  res.setHeader('Access-Control-Allow-Private-Network', "true");
+  res.header("Access-Control-Allow-Origin", "http://kittenbook.software");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept", "Authorization");
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Credentials', "true");
+  res.header('Access-Control-Allow-Private-Network', "true");
   next();
 });
 const corsOptions = {
