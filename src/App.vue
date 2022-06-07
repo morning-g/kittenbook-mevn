@@ -42,8 +42,22 @@
         </v-list>
         <template v-slot:append>
           <div class="pa-2">
-            <v-btn rounded block @click="logout()" @logged-user="loggedIn" :v-if="loggedUsername!==''">
+            <v-btn rounded block @click="logout()" v-if="logged">
               Cerrar sesión
+            </v-btn>
+          </div>
+          <div class="pa-2">
+            <v-btn rounded block @click="$router.push({
+              name: 'Login'
+            })" v-if="!logged">
+              Iniciar sesión
+            </v-btn>
+          </div>
+          <div class="pa-2">
+            <v-btn rounded block @click="$router.push({
+              name: 'Register'
+            })" v-if="!logged">
+              Registrarse
             </v-btn>
           </div>
         </template>
@@ -77,19 +91,20 @@
 export default {
   data: () => ({
     drawer: false,
-    loggedUsername: '',
+    logged: false,
   }),
+  updated() {
+    this.logged = localStorage.getItem('authenticated') === null ? false : true;
+  },
   methods: {
     logout() {
       localStorage.removeItem('jwtToken')
-      this.loggedUsername = ''
+      localStorage.removeItem('authenticated')
+      localStorage.removeItem('username')
       this.$router.push({
         name: 'Login'
       })
     },
-    loggedIn(username) {
-      this.loggedUsername = username
-    }
   },
   name: 'App'
 }
@@ -103,5 +118,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  background-color: #673ab7;
 }
 </style>

@@ -57,13 +57,13 @@ export default {
       axios.post(`http://localhost:3000/api/auth/login/`, this.login)
         .then(response => {
           localStorage.setItem('jwtToken', response.data.token)
-          this.$emit('loggedUser', login.username)
+          localStorage.setItem('authenticated', true)
+          localStorage.setItem('username', this.login.username)
           this.$router.push({
             name: 'BookList'
           })
         })
         .catch(e => {
-          console.log(e)
           this.errors.push(e)
         })
     },

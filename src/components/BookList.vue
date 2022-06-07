@@ -210,6 +210,7 @@ export default {
       dialogActualizar: false,
       dialogEliminar: false,
       search: '',
+      isLogged: false,
       ventasRules: [v => !!v || "Este campo es obligatorio."],
       headers: [
         { text: 'Título', value: 'title' },
@@ -231,7 +232,12 @@ export default {
     this.books.forEach(element => {
       shows[element._id] = false
     });
-    console.log(this.shows)
+  },
+  mounted() {
+    this.isLogged = localStorage.getItem('authenticated')
+    if (!this.isLogged) {
+      this.$router.push('/login')
+    }
   },
   methods: {
     getAll() {

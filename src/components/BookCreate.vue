@@ -118,6 +118,7 @@ export default {
             menu: false,
             modal: false,
             menu2: false,
+            isLogged: false,
             dialogCrear: false,
             dialogError: false,
             titleRules: [v => !!v || "Este campo es obligatorio."],
@@ -131,6 +132,12 @@ export default {
             image_urlRules: [v => !!v || "Este campo es obligatorio.",
             v => new RegExp('(https?:\\/\\/.*\\.(?:png|jpg))').test(v) || "La URL debe ser una imagen válida."],
             starsRules: [v => !!v || "Este campo es obligatorio."],
+        }
+    },
+    mounted() {
+        this.isLogged = localStorage.getItem('authenticated')
+        if (!this.isLogged) {
+            this.$router.push('/login')
         }
     },
     methods: {
