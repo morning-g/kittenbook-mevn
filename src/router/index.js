@@ -26,7 +26,7 @@ export default new Router({
       component: Register
     },
     {
-      path: '/inicio',
+      path: '/',
       name: 'Welcome',
       component: Welcome
     },

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <v-app>
+    <v-app dark :style="{background: $vuetify.theme.dark.background}">
       <v-app-bar app color="deep-purple" dark>
         <v-app-bar-nav-icon @click="drawer = !drawer"> </v-app-bar-nav-icon>
         <v-toolbar-title>Kittenbook</v-toolbar-title>
