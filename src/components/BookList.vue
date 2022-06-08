@@ -183,7 +183,7 @@
       <div v-if="errors && errors.length">
         <div v-for="error of errors">
           <v-alert v-model="alert" border="left" close-text="Close Alert" color="deep-purple accent-4" dark dismissible
-            show>{{ error.message }}.</v-alert>
+            show>{{ "Ocurrió un error. Inténtelo de nuevo." }}.</v-alert>
         </div>
       </div>
     </v-container>
